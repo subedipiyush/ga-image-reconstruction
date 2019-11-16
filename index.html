@@ -1,0 +1,51 @@
+<html>
+<meta charset="UTF-8">
+<head>
+    <title>Image Reconstruction using Evolutionary Algorithm(s)</title>
+
+    <style>
+        .image {
+            width: 350px;
+            height: 350px;
+            margin: 8px;
+
+            /* inactive canvas appearance */
+            /* background: solid; */
+            border: solid;
+            /* background-color: lightgray; */
+        }
+    </style>
+</head>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+
+<!-- <script src="gbur.js"></script> -->
+<script src="lib/jsfeat-min.js"></script>
+<script src="individual.js"></script>
+<script src="population.js"></script>
+<script src="runner.js"></script>
+<!-- <script src="runner2.js"></script> -->
+
+<canvas id="inputCanvas" class="image" style="margin-right: 4px;"></canvas>
+<canvas id="referenceCanvas" class="image" style="margin-right: 4px;"></canvas>
+<!-- <canvas id="workingCanvas" class="image" style="margin-right: 4px;"></canvas> -->
+<canvas id="outputCanvas" class="image" style="margin-left: 4px;"></canvas>
+
+
+<div class="btn-group">
+    <button id="start" class="btn control-btn btn-success">
+        Start
+    </button>
+    <button id="stop" class="btn control-btn btn-success">
+        Stop
+    </button>
+</div>
+
+<!-- The hidden bits: -->
+<img src="images/face.jpg" id="inputImage" style="display: none;" />
+<canvas id="workingCanvas" class="image" style="display: none;"></canvas>
+
+</html>
