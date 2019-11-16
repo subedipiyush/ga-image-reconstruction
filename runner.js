@@ -66,6 +66,7 @@ class Runner {
         canvas.height = height;
     }
 
+
     prepareImage() {
         
         /* FIXME: add support for images of size other than 350x350. This requires
@@ -75,7 +76,7 @@ class Runner {
         this.setCanvasSize(this.outputCanvas, this.width(), this.height());
         this.setCanvasSize(this.workingCanvas, this.width(), this.height());
 
-        this.inputCtx.drawImage(this.inputImage, 0, 0);
+        this.inputCtx.drawImage(this.inputImage, 0, 0, this.width(), this.height());
 
         let imageData = this.inputCtx.getImageData(0, 0,
             this.width(),
@@ -96,7 +97,7 @@ class Runner {
     }
 
     setConfiguration() {
-        this.populationSize = 50;
+        this.populationSize = 100;
         this.workingSize = 350;
     }
 
@@ -179,15 +180,17 @@ class Runner {
      */
     run() {
         let that = this;
-        let population = new Population(this.populationSize, new Individual(this.inputImgCorners, this.fitnessEvaluator.bind(this)));
+        let population = new Population(this.populationSize, new Individual(this.inputImgCorners >> 1, this.fitnessEvaluator.bind(this)));
 
         let i=0;
 
         /* Each tick produces a new population and new fittest */
         function tick() {
 
-            if(i >= 5000)
+            if(i >= 5000) {
                 clearInterval(that.clock);
+                alert("stopped");
+            }
 
 
             /* Breed a new generation */

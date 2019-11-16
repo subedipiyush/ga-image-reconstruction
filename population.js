@@ -61,8 +61,8 @@ class Population {
         let offspring2Dna = [];
         for(let i=0; i < parents[0].dnaLength; i++) {
             let index = Math.random() < 0.5 ? 0 : 1;
-            offspring1Dna.push(new Gene(parents[index].dna[i].x, parents[index].dna[i].y));
-            offspring2Dna.push(new Gene(parents[index ^ 1].dna[i].x, parents[index ^ 1].dna[i].y));
+            offspring1Dna.push(parents[index].dna[i].clone());
+            offspring2Dna.push(parents[index ^ 1].dna[i].clone());
         }
 
         return [parents[0].newInstance(offspring1Dna), parents[0].newInstance(offspring2Dna)];
@@ -72,17 +72,18 @@ class Population {
         let mutateAmount = 0.1;
         for (let j = 0; j < offsprings.length; j++) {
             for (let k = 0; k < offsprings[j].dna.length; k++) {
+                
                 let gene = offsprings[j].dna[k];
+                for(let l=0; l < gene.length(); l++) {
+                    if (Math.random() < mutationRate) {
+                        let a = gene.getAlleleAt(l);
 
-                if (Math.random() < mutationRate) {
-                    gene.x += (Math.random() * mutateAmount * 2 - mutateAmount);
-                    gene.x = gene.x < 0 ? 1 : gene.x;
-                    gene.x = gene.x > 1 ? 0 : gene.x;
-                }
-                if (Math.random() < mutationRate) {
-                    gene.y += (Math.random() * mutateAmount * 2 - mutateAmount);
-                    gene.y = gene.y < 0 ? 1 : gene.y;
-                    gene.y = gene.y > 1 ? 0 : gene.y;
+                        a += (Math.random() * mutateAmount * 2 - mutateAmount);
+                        a = a < 0 ? 1 : a;
+                        a = a > 1 ? 0 : a;
+
+                        gene.setAlleleAt(l, a);
+                    }
                 }
 
                 offsprings[j].dna[k] = gene;    // redundant?
@@ -96,7 +97,7 @@ class Population {
 
         let offsprings = [];
 
-        for (let i=0; i < this.size; i ++) {
+        for (let i=0; i < this.size; i +=2 ) {
 
             // select
             let parents = this.selectParents();
