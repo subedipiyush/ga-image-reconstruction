@@ -29,7 +29,7 @@ class Population {
 
     selectParents() {
         // select two parents
-        // binary tournament
+        // tournament selection
 
         if(this.size == 1) {
             return this.individuals;
@@ -52,19 +52,6 @@ class Population {
 
 
         return parents;
-        // for (var j = 0; j < 2; j++) {
-
-        //     let parent1Index = (Math.random() * this.size) >> 0,
-        //         parent2Index = (Math.random() * this.size) >> 0;         // note: allowing duplicates; subject to change
-
-        //     if (this.individuals[parent1Index].isFitterThan(this.individuals[parent2Index])) {
-        //         parents.push(this.individuals[parent1Index]);
-        //     } else {
-        //         parents.push(this.individuals[parent2Index]);
-        //     }
-        // }
-
-        // return parents;
     }
 
     crossOver(parents) {
@@ -131,65 +118,5 @@ class Population {
 
         this.individuals = offsprings;
     }
-
-    iterate2() {
-
-        if (this.size > 1) {
-
-            var offspring = [];
-
-            let selectionCutoff = 0.15;
-            let fittestSurvive = false;
-
-            /* The number of individuals from the current generation to select for
-             * breeding
-             */
-            var selectCount = Math.floor(this.size * selectionCutoff);
-
-            /* The number of individuals to randomly generate */
-            var randCount = Math.ceil(1 / selectionCutoff);
-
-            this.sort();
-
-            if (fittestSurvive)
-                randCount--;
-
-            for (var i = 0; i < selectCount; i++) {
-
-                for (var j = 0; j < randCount; j++) {
-                    var randIndividual = i;
-
-                    while (randIndividual == i)
-                        randIndividual = (Math.random() * selectCount) >> 0;
-
-                    offspring.push(this.individuals[0].newInstance2(this.individuals[i].dna,
-                        this.individuals[randIndividual].dna));
-                }
-            }
-
-            if (fittestSurvive) {
-                this.individuals.length = selectCount;
-                this.individuals = this.individuals.concat(offspring);
-            } else {
-                this.individuals = offspring;
-            }
-
-            this.individuals.length = this.size;
-
-        } else {
-
-            /*
-             * Asexual reproduction:
-             */
-
-            var parent = this.individuals[0];
-            var child = new Individual(parent.dna, parent.dna);
-
-            if (child.fitness > parent.fitness)
-                this.individuals = [child];
-
-        }
-    };
-
 
 }
