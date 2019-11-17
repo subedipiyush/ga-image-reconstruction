@@ -1,5 +1,6 @@
 <html>
 <meta charset="UTF-8">
+
 <head>
     <title>Image Reconstruction using Evolutionary Algorithm(s)</title>
 
@@ -11,32 +12,116 @@
 
             border: solid;
         }
+
+        .control-btn {
+            width: 150px !important;
+            font-weight: bold;
+        }
+
+        .btn-group {
+            margin: auto;
+            width: 40%;
+            padding: 40px;
+        }
+
+        .btn {
+            border: none;
+            background: #393d3f;
+            color: #ffffff;
+            padding: 9px 12px 10px;
+            line-height: 22px;
+            text-decoration: none;
+            text-shadow: none;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            -webkit-transition: none;
+            -moz-transition: none;
+            -o-transition: none;
+            transition: none;
+        }
+
+        .btn.btn-danger {
+            background-color: #e74c3c;
+        }
+
+        .btn.btn-success {
+            background-color: #2ecc71;
+        }
+
+        .page-header {
+            text-align: center;
+            color: salmon;
+        }
+
+        .picker {
+            margin: 8px;
+        }
+
+        .cell {
+            vertical-align: top;
+        }
     </style>
 </head>
 
-<script
-  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 
-<!-- <script src="gbur.js"></script> -->
 <script src="lib/jsfeat-min.js"></script>
 <script src="individual.js"></script>
 <script src="population.js"></script>
 <script src="runner.js"></script>
-<!-- <script src="runner2.js"></script> -->
 
-<canvas id="inputCanvas" class="image" style="margin-right: 4px;"></canvas>
-<!-- <canvas id="workingCanvas" class="image" style="margin-right: 4px;"></canvas> -->
-<canvas id="outputCanvas" class="image" style="margin-left: 4px;"></canvas>
+
+<h1 class="page-header">Constructing images using lines using Genetic Algorithm</h1>
+<table>
+    <tr style="vertical-align: baseline;">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <canvas id="inputCanvas" class="image" style="margin-right: 4px;"></canvas>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="file" id="imgPicker" class="picker" accept="image/png, image/jpeg" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <canvas id="outputCanvas" class="image" style="margin-left: 4px;"></canvas>
+        </td>
+        <td style="vertical-align: top; padding: 8px;">
+            <h3>Configuration</h3>
+            <table id="config">
+                <!-- dynamically filled -->
+            </table>
+        </td>
+        <td style="vertical-align: top; padding: 8px;">
+            <h3>Statistics</h3>
+            <table id="stats">
+                <!-- dynamically filled -->
+            </table>
+        </td>
+    </tr>
+
+</table>
 
 
 <div class="btn-group">
     <button id="start" class="btn control-btn btn-success">
         Start
     </button>
-    <button id="stop" class="btn control-btn btn-success">
+    <button id="stop" class="btn control-btn btn-danger">
         Stop
+    </button>
+    <button id="clear" class="btn control-btn">
+        Clear
     </button>
 </div>
 

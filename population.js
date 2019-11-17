@@ -6,11 +6,13 @@
 
 class Population {
 
-    constructor(size, individal) {
-        this.size = size;
+    constructor(config, individal) {
+        this.config = config;
+        this.size = config._populationSize;
+
         this.individuals = [];
 
-        for (var i = 0; i < size; i++) {
+        for (let i = 0; i < this.size; i++) {
             this.individuals.push(individal.newInstance());
         }
     }
@@ -36,12 +38,10 @@ class Population {
         }
 
         let parents = [];
-        let tournamentSize = 5;
-        let numberOfTournaments = 2;
 
-        for(let k=0; k < numberOfTournaments; k++) {
+        for(let k=0; k < 2; k++) {
             let inds = [];
-            for(let i=0; i < tournamentSize; i++) {
+            for(let i=0; i < this.config._tournamentSize; i++) {
                 let randIndex = (Math.random() * this.size) >> 0;
                 inds.push(this.individuals[randIndex]);
             }
@@ -68,17 +68,16 @@ class Population {
         return [parents[0].newInstance(offspring1Dna), parents[0].newInstance(offspring2Dna)];
     }
 
-    mutate(offsprings, mutationRate) {
-        let mutateAmount = 0.1;
+    mutate(offsprings) {
         for (let j = 0; j < offsprings.length; j++) {
             for (let k = 0; k < offsprings[j].dna.length; k++) {
                 
                 let gene = offsprings[j].dna[k];
                 for(let l=0; l < gene.length(); l++) {
-                    if (Math.random() < mutationRate) {
+                    if (Math.random() < this.config._mutationRate) {
                         let a = gene.getAlleleAt(l);
 
-                        a += (Math.random() * mutateAmount * 2 - mutateAmount);
+                        a += (Math.random() * this.config._mutationAmount * 2 - this.config._mutationAmount);
                         a = a < 0 ? 1 : a;
                         a = a > 1 ? 0 : a;
 
@@ -105,14 +104,12 @@ class Population {
             // crossover
             let offsprings_inner = parents;
 
-            let crossOverRate = 1.0;
-            if (Math.random() < crossOverRate) {
+            if (Math.random() < this.config._crossoverRate) {
                 offsprings_inner = this.crossOver(parents);
             }
 
             // mutate
-            let mutationRate = 0.01;
-            offsprings_inner = this.mutate(offsprings_inner, mutationRate);
+            offsprings_inner = this.mutate(offsprings_inner);
 
             offsprings = offsprings.concat(offsprings_inner);
         }
